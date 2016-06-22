@@ -27,6 +27,11 @@ export class Config {
          * {string} The port to listen on.
          */
         public Port: string,
+
+        /**
+         * {boolean} Is Caching Enabled
+         */
+        public CachingEnabled: boolean,
         
         /**
          * (Optional) Settings for the Authentication module.
@@ -96,6 +101,7 @@ export class Config {
                     dmSettings.consoleReporting,
                     dmSettings.logLevel,
                     port,
+                    true,
                     {
                         loginUrl: configSettings.loginUrl,
                         mongoUri: configSettings.mongoUri,
@@ -125,6 +131,7 @@ export class Config {
             CONSOLE_REPORTING: string;
             LOG_LEVEL: string;
             PORT?: string;
+            CACHING_ENABLED: boolean;
         } = require(userConfigFile);
 
         if (!/(^|;)HostName=/i.test(userConfig.IOTHUB_CONNECTION_STRING)) {
@@ -136,7 +143,8 @@ export class Config {
             userConfig.IOTHUB_CONNECTION_STRING,
             userConfig.CONSOLE_REPORTING || 'both',
             userConfig.LOG_LEVEL || 'trace',
-            userConfig.PORT || '3003');
+            userConfig.PORT || '3003',
+            userConfig.CACHING_ENABLED);
     }
     
     public static initializeFromEnvironment() {
@@ -144,7 +152,8 @@ export class Config {
             process.env.IOTHUB_CONNECTION_STRING,
             'both',
             'trace',
-            process.env.PORT || '3003');
+            process.env.PORT || '3003',
+            !!process.env.CACHING_ENABLED);
     }
 }
 
