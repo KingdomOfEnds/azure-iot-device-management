@@ -27,6 +27,20 @@ export async function initialize(): Promise<express.Express> {
     // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
     
     const config = Config.get();
+
+    // if caching is not enabled, then we need to disable it
+    if (!config.CachingEnabled) {
+        // disables etag caching (304s)
+        app.disable('etag');
+        // force all responses to have a no-cache header; can be overriden in handlers
+        app.use((req, res, next) => {
+            res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.header('Pragma', 'no-cache');
+            res.header('Expires', '0');
+            next();
+        });
+    }
+
     if (config.Auth) {
         // initialize authentication module and set up middleware that 
         // ensures the user is authenticated:

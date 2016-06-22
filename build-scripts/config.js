@@ -91,6 +91,7 @@ module.exports = {
         IOTHUB_CONNECTION_STRING: '<YOUR CONNECTION STRING HERE>',
         CONSOLE_REPORTING: "both",
         LOG_LEVEL: "trace",
-        PORT: '3003'
+        PORT: '3003',
+        CACHING_ENABLED: false
     }
 }
