@@ -95,6 +95,18 @@ values:
 - ```"warn"```  
 - ```"error"```  
 - ```"fatal"```  
+
+__Port:__
+
+key: ```"PORT"```
+
+value: string of the port number
+
+__Caching:__
+
+key: ```"CACHING_ENABLED"```
+
+value: boolean; if true, caching is enabled, false, not.
     
 
 ## Run the user experience mode
