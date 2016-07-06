@@ -195,3 +195,7 @@ There are three places where you can configure the experience. In order of prefe
 1. The user-config.json file. This configuration is suitable for development experience only.
 2. Environment variables. This configuration is suitable when deploying.
 3. Hard-coded defaults (if they exist).
+
+## Code of Conduct
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
