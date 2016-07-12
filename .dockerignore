@@ -1,20 +1,15 @@
 # Development configs
 .*
-Dockerfile
-
-# Typescript files
-*.ts*
-ts*.json
-
-# Tests
-*.spec.js
 
 # Non-runtime directories
-/
-app/
-build-scripts/
+node_modules/
+typings/
 dist/app/maps/
 dist/server/maps/
 dist/test/
-node_modules/
-server/
+
+# Development configs
+user-config.json
+
+# Tests
+**/*.spec.js
