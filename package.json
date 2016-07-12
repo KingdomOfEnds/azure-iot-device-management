@@ -4,11 +4,12 @@
     "node": "6.1.0"
   },
   "name": "@azure-iot/device-management",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "prebuild": "gulp install",
     "build": "gulp build",
+    "bundle": "gulp bundle",
     "develop": "gulp develop",
     "deploy": "gulp deploy",
     "docker": "node build-scripts/docker.js",
@@ -28,6 +29,7 @@
     "@angular/upgrade": "2.0.0-rc.1",
     "@azure-iot/authentication": "^1.0.0-rc.2",
     "@azure-iot/common-ux": "^1.0.0-rc.5",
+    "@azure-iot/configuration": "^1.0.0-rc.6",
     "@azure-iot/hal": "^1.0.0-rc.2",
     "@azure-iot/logging": "^1.0.0-rc.2",
     "JSV": "^4.0.2",

@@ -439,7 +439,7 @@ describe('History Tests', () => {
                 let column = history.gridConfiguration.columns[0];
 
                 expect(column.header()).toEqual('TEST');
-                expect(column.value(<any>{parentJobId: 'id'})).toEqual(Resources.JobProperties.IsParent);
+                expect(column.value(<any>{parentJobId: 'id'})).toEqual(Resources.JobProperties.IsChild);
             });
 
             it('calculates child', () => {
@@ -448,7 +448,7 @@ describe('History Tests', () => {
                 let column = history.gridConfiguration.columns[0];
 
                 expect(column.header()).toEqual('TEST');
-                expect(column.value(<any>{parentJobId: null})).toEqual(Resources.JobProperties.IsChild);
+                expect(column.value(<any>{parentJobId: null})).toEqual(Resources.JobProperties.IsParent);
             });
         });
     });

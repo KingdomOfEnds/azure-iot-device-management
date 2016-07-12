@@ -21,22 +21,19 @@ describe('Device API', () => {
     let response: any,
         request: any;
 
-    beforeAll((done) => {
-        let config = process.env.PORT ? Config.initializeFromEnvironment() : Config.initializeFromFile();
-        let connStr: string = config.IotHubConnectionString;
-        this.deviceAPI = new DeviceAPI(connStr);
+    beforeAll(done => {
+        Config.initialize().then(config => {
+            let connStr: string = config.IotHubConnectionString;
+            this.deviceAPI = new DeviceAPI(connStr);
 
-        expect(this.deviceAPI).toBeDefined();
+            expect(this.deviceAPI).toBeDefined();
 
-        request = jasmine.createSpyObj('request', ['params', 'body']);
-        response = jasmine.createSpyObj('response', ['json', 'locals', 'set']);
-        done();
+            request = jasmine.createSpyObj('request', ['params', 'body']);
+            response = jasmine.createSpyObj('response', ['json', 'locals', 'set']);
+        }).then(done, done.fail);
     });
 
     describe('Device CRUD - Tests', () => {
-
-        var deviceAPI: DeviceAPI;
-
         beforeAll((done) => {
             spyOn(this.deviceAPI.registry, 'queryDevices');
             done();

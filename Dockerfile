@@ -1,18 +1,20 @@
-FROM node:latest
+FROM node:6-slim
 
 # Create app directories
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /app
+WORKDIR /app
 
 # Set operational variables
 ENV NODE_ENV production
+EXPOSE 80
 ENV PORT 80
 
-# Bundle app source
-COPY . .
-
 # Install app dependencies
-COPY package.json .
+COPY package.json ./
 RUN npm install
+
+# Bundle app source
+COPY systemjs.config.js ./
+COPY dist/ dist/
 
 CMD [ "npm", "start" ]

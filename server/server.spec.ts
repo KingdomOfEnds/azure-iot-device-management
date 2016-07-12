@@ -44,8 +44,8 @@ describe('Server Error Handlers', () => {
     });
     
     it('on initialize, creates an express application', (done) => {
-        Config.initializeFromFile();
-        server.initialize()
+        Config.initialize()
+            .then(() => server.initialize())
             .then(app => {
                 expect(app).toBeDefined();
                 done();

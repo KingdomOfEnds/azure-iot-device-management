@@ -1,9 +1,8 @@
 /* Copyright (c) Microsoft Corporation. All Rights Reserved. */
 
-import * as fs from 'fs';
 import * as path from 'path';
-import * as request from 'request';
 import {Hal} from '@azure-iot/hal/types';
+import {config} from '@azure-iot/configuration';
 
 export class Config {
     constructor(
@@ -63,115 +62,40 @@ export class Config {
      * Otherwise, the configuration is initialized from user-config.json.   
      */
     public static async initialize(): Promise<Config> {
-        const configUrl: string = process.env.CONFIG_URL;
-        const port: string = process.env.PORT;
-        if (!configUrl && !port) {
-            return Config.initializeFromFile();
-        } else if (!configUrl) {
-            return Config.initializeFromEnvironment();
-        } else {
-            return await Config.initializeFromConfigService(configUrl, port);
-        }
-    }
-    
-    public static async initializeFromConfigService(configUrl: string, port: string) {
-        const delayBeforeRetrySeconds = 5;
-        let numRetries = 60; // retry max 60 times (5 minutes)
-        while (true) {
-            try {
-                const discovery = await getHal<void>(configUrl + '/api/discovery');
-                
-                const settingsLink = <Hal.Link>discovery._links['settings:list'];
-                if (!settingsLink) throw new Error('Config service does not provide settings:list');
-        
-                const configSettings = await getHal<ConfigSettings>(configUrl + settingsLink.href);
-                if (!configSettings.iotHubConnStr) throw new Error('Config service does not provide setting "iotHubConnStr"');
-                if (!configSettings.loginUrl) throw new Error('Config service does not provide setting "loginUrl"');
-                if (!configSettings.mongoUri) throw new Error('Config service does not provide setting "mongoUri"');
-                if (!configSettings.sessionSecret) throw new Error('Config service does not provide setting "sessionSecret"');
-                
-                const dmSettings = configSettings['device-management'];
-                if (!dmSettings || !dmSettings.consoleReporting || !dmSettings.logLevel) {
-                    throw new Error('Config service does not provide setting "device-management"');  
-                } 
-                                
-                // set the static singleton and return:
-                return Config.instance = new Config(
-                    configSettings.iotHubConnStr,
-                    dmSettings.consoleReporting,
-                    dmSettings.logLevel,
-                    port,
-                    true,
-                    {
-                        loginUrl: configSettings.loginUrl,
-                        mongoUri: configSettings.mongoUri,
-                        sessionSecret: configSettings.sessionSecret,
-                    });
-            } catch (err) {
-                --numRetries;
-                if (numRetries === 0) {
-                    throw new Error('Could not initialize from Config Service: ' + err);                                            
-                } else {                    
-                    // wait for 5 seconds before retrying:
-                    console.error(`WARNING: Could not initialize from Config Service: ${err}; Retrying...`);
-                    await new Promise((resolve, reject) => setTimeout(resolve, delayBeforeRetrySeconds * 1000));
-                }  
+        await config.initialize({
+            configFilename: path.join(__dirname, '..', '..', 'user-config.json'),
+            requiredKeys: ['IOTHUB_CONNECTION_STRING'],
+            defaultValues: {
+                CONSOLE_REPORTING: 'both',
+                LOG_LEVEL: 'trace',
+                PORT: '3003',
+                CACHING_ENABLED: true
             }
-        }
-    }
-    
-    public static initializeFromFile() {
-        const userConfigFile = path.join(__dirname, '../../user-config.json');
-        if (!fs.existsSync(userConfigFile)) {
-            throw new Error('Unable to find the user configuration: please fill out the information in ' + userConfigFile);
+        });
+
+        const hubConnStr = config.getString('IOTHUB_CONNECTION_STRING');        
+        if (!/(^|;)HostName=/i.test(hubConnStr)) {
+            throw new Error('IOTHUB_CONNECTION_STRING was not filled out correctly; please fill out the information in configuration');
         }
 
-        let userConfig: {
-            IOTHUB_CONNECTION_STRING: string;
-            CONSOLE_REPORTING: string;
-            LOG_LEVEL: string;
-            PORT?: string;
-            CACHING_ENABLED: boolean;
-        } = require(userConfigFile);
+        // get auth values:
+        let auth = {
+            loginUrl: config.getString('LOGIN_URL'),
+            mongoUri: config.getString('MONGO_URI'),
+            sessionSecret: config.getString('SESSION_SECRET')
+        };
 
-        if (!/(^|;)HostName=/i.test(userConfig.IOTHUB_CONNECTION_STRING)) {
-            throw new Error('IOTHUB_CONNECTION_STRING was not filled out correctly; please fill out the information in ' + userConfigFile);
+        if (!(auth.loginUrl && auth.mongoUri && auth.sessionSecret)) {
+            auth = null;
         }
-        
+
         // set the static singleton and return:
         return Config.instance = new Config(
-            userConfig.IOTHUB_CONNECTION_STRING,
-            userConfig.CONSOLE_REPORTING || 'both',
-            userConfig.LOG_LEVEL || 'trace',
-            userConfig.PORT || '3003',
-            userConfig.CACHING_ENABLED);
+            hubConnStr,
+            config.getString('CONSOLE_REPORTING'),
+            config.getString('LOG_LEVEL'),
+            config.getString('PORT'),
+            config.get<boolean>('CACHING_ENABLED'),
+            auth);
     }
-    
-    public static initializeFromEnvironment() {
-        return Config.instance = new Config(
-            process.env.IOTHUB_CONNECTION_STRING,
-            'both',
-            'trace',
-            process.env.PORT || '3003',
-            !!process.env.CACHING_ENABLED);
-    }
-}
-
-interface ConfigSettings {
-    iotHubConnStr: string;
-    loginUrl: string;
-    mongoUri: string;
-    sessionSecret: string;
-    'device-management': {
-        logLevel: string;
-        consoleReporting: string;
-    };
-}
-
-async function getHal<T>(uri: string) {
-    return new Promise<T & Hal.Resource>((resolve, reject) => {        
-        request.get(uri, {json: true}, (err, response, body) => {
-            err ? reject(err) : resolve(body);
-        });
-    });
 }
