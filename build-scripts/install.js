@@ -22,12 +22,12 @@ var gulp        = require('gulp'),
 // this task has to happen before everything else
 gulp.task('clean', () => rimraf.sync(config.cleanFolder));
 
-var installTasks = config.installPaths.reduce((previous, path, index) => {      
-    var taskName = 'install:' + index;        
-    gulp.task(taskName, previous, () => gulp.src(path).pipe(install()));      
-    return previous.concat([taskName]);       
-}, ['clean']);        
-      
+var installTasks = config.installPaths.reduce((previous, path, index) => {
+    var taskName = 'install:' + index;
+    gulp.task(taskName, previous, () => gulp.src(path).pipe(install()));
+    return previous.concat([taskName]);
+}, ['clean']);
+
 gulp.task('install', installTasks)
 
 // these tasks ensure that the code we have is valid without building it
@@ -53,6 +53,6 @@ module.exports = taskFactory({
         gulp.src(config.lintPaths)
             .pipe(tslint())
             .pipe(tslint.report("verbose")),
-    'fixup': () => 
+    'fixup': () =>
         copy('vendor/**/*', './node_modules/')
 }, ['clean']);

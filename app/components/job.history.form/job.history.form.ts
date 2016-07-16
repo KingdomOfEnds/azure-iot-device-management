@@ -13,8 +13,8 @@ import {GlobalContext} from '../../core/index';
 
 export class HistoryForm extends GlobalContext {
     @Input() public job: Job;
-    
+
     constructor() {
-        super();        
-    } 
+        super();
+    }
 }

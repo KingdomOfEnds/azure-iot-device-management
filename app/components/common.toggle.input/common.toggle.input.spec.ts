@@ -13,17 +13,17 @@ injectAsync
 import {ToggleInput} from './common.toggle.input';
 
 describe('ToggleInput Tests', () => {
-    
+
     let toggleInput: ToggleInput;
-    
+
     beforeEach(() => {
         toggleInput = new ToggleInput();
     });
-    
+
     it('should construct', () => {
         expect(toggleInput).toBeDefined();
     });
-    
+
 
     it('should change value when not disabled', () => {
         toggleInput.value = true;

@@ -8,8 +8,8 @@ import {QueryGridSource} from '../../core/index';
 import {QueryExpression, HalLinks, HalResponse} from '../../models/index';
 import {Observable} from 'rxjs/Rx';
 /**
- * Querying devices without a sort expression returns devices sorted by deviceId in ascending order 
- * Change defaultSortOrder if this logic changes. 
+ * Querying devices without a sort expression returns devices sorted by deviceId in ascending order
+ * Change defaultSortOrder if this logic changes.
  */
 const defaultSortOrder: IGridSourceFilter = {
     sorted: {
@@ -23,7 +23,7 @@ interface IRegistryStatistics {
     enabledDeviceCount: number;
     disabledDeviceCount: number;
 }
-    
+
 /**
  * DeviceGridSource is an implemention of IGridSource<Device> that pulls data for devices from the services
  */
@@ -61,7 +61,7 @@ export class DeviceGridSource extends QueryGridSource<Device> {
 
     private updateStatistics = (returnedRows: HalResponse<Device[]>) => {
         this.visibleRowCount = returnedRows.data.length;
-        
+
         this.dataService.getRegistryStatistics()
             .subscribe((stats: HalResponse<any>) => {
                 this.registryStats = stats.data;

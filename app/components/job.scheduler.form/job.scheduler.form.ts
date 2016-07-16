@@ -13,26 +13,26 @@ import {GlobalContext} from '../../core/index';
 })
 
 export class JobSchedulerForm extends GlobalContext {
-    
+
     /**
-    * This is the array of formitems 
+    * This is the array of formitems
     */
     @Input() public items: { label: string, id: string, required: boolean, defaultValue: any }[];
-       
+
     /**
     * When form is submitted a submit event is send
     */
     @Output() public submit: EventEmitter<Object> = new EventEmitter();
-    
+
     /**
     * When form is cancelled a cancel event is send
     */
     @Output() public cancel: EventEmitter<any> = new EventEmitter();
 
     public form: ControlGroup;
-    
+
     private isValid: boolean = false;
-    
+
     constructor(private formBuilder: FormBuilder) {
         super();
     }

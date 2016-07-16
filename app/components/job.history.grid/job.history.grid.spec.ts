@@ -115,7 +115,7 @@ describe('History Tests', () => {
 
         fakeGridSource = new HistoryGridSource(dataService);
 
-        // These need to be injected for real tests 
+        // These need to be injected for real tests
         let router_params = <any>{};
 
         history = new HistoryGrid(fakeGridSource, fakeState, router_params, fakeDataService, <any>{ go: () => { } });
@@ -150,7 +150,7 @@ describe('History Tests', () => {
 
     it('should be able to select configuration', () => {
         history.selectConfiguration(config2);
-        
+
         // Verifying that name, columns and filters match Config 2.
         expect(history.selectedConfiguration.value.name).toEqual('Config 2');
         expect(history.selectedConfiguration.value.columns.length).toEqual(1);
@@ -158,7 +158,7 @@ describe('History Tests', () => {
         expect(history.selectedConfiguration.value.filters.length).toEqual(0);
 
         history.selectConfiguration(config3);
-        
+
         // Verifying that name, columns and filters match Config 3.
         expect(history.selectedConfiguration.value.name).toEqual('Config 3');
         expect(history.selectedConfiguration.value.columns.length).toEqual(2);
@@ -224,7 +224,7 @@ describe('History Tests', () => {
         history.selectedConfiguration.value.columns[0] = column;
 
         var newFilters: FilterValue<IGridFilter>[] = [
-            { 
+            {
                 option: {
                     'name': 'Action Id', 'model': 'default', 'key': 'jobId', 'in': [], 'isArray': false
                 },
@@ -241,7 +241,7 @@ describe('History Tests', () => {
         history.applyFilter();
         expect(fakeState.CurrentHistoryGridView.next).not.toHaveBeenCalled();
     });
-    
+
     it('should not add null filters to CurrentHistoryGridView when the filters are applied', () => {
         spyOn(fakeState.CurrentHistoryGridView, 'next');
 
@@ -251,7 +251,7 @@ describe('History Tests', () => {
         history.selectedConfiguration.value.columns[0] = column;
 
         var newFilters: FilterValue<IGridFilter>[] = [
-            { 
+            {
                 option: null,
                 value: ''
             }, {

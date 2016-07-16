@@ -1,6 +1,6 @@
 /* Copyright (c) Microsoft Corporation. All Rights Reserved. */
 
-import {shadow, ShadowFunction} from './shadow'; 
+import {shadow, ShadowFunction} from './shadow';
 
 class Foo {
     public first;
@@ -15,7 +15,7 @@ class Foo {
     concat = function() {
         return this.first + this.second;
     };
-    
+
     // public api -> internal mutation
     //           -> private api -> public api
     resetFirst = function(val: string) {
@@ -146,11 +146,11 @@ describe('Shadow Object Tests', () => {
         expect(testObj.foo._boundMethod()).toEqual('AB_AB');
         expect(sideEffects['boundMethod']).toBeUndefined();
     });
-    
+
     it('should return base properties', () => {
         expect(testObj.foo.first).toEqual('A');
     });
-    
+
     it('should set base properties', () => {
         testObj.foo.first = 'C';
         expect(testObj.foo.first).toEqual('C');

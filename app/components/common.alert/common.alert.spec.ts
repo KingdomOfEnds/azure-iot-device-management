@@ -13,9 +13,9 @@ injectAsync
 import {Alert} from './common.alert';
 
 describe('Alert Tests', () => {
-    
+
     let alert: Alert;
-    
+
     beforeEach(() => {
         alert = new Alert();
     });

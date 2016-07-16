@@ -1,6 +1,6 @@
 /* Copyright (c) Microsoft Corporation. All Rights Reserved. */
 
-// This class can be deprecated if JobResponse class from node SDK comes with typings  
+// This class can be deprecated if JobResponse class from node SDK comes with typings
 export class Job {
     jobId: string;
     startTimeUtc: number | Date;
@@ -11,6 +11,4 @@ export class Job {
     statusMessage: string;
     deviceId: string;
     parentJobId: string;
-}  
-  
-  
+}

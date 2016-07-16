@@ -115,7 +115,7 @@ describe('Device Grid Source Tests', () => {
         gridSource.poll(false);
     });
 
-    
+
 
     describe('on successful updates', () => {
 

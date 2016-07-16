@@ -13,7 +13,7 @@ module.exports = function (config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['systemjs', 'jasmine'],
 
-        // list of files / patterns to load in the browser   
+        // list of files / patterns to load in the browser
         files: [
             'node_modules/reflect-metadata/Reflect.js',
             'node_modules/es5-shim/es5-shim.js',

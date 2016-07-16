@@ -7,8 +7,8 @@ import {Job} from '../../models/index';
 import {DataService} from '../../services/index';
 
 /**
- * Querying jobs without a sort expression returns jobs sorted by jobId in ascending order 
- * Change defaultSortOrder if this logic changes. 
+ * Querying jobs without a sort expression returns jobs sorted by jobId in ascending order
+ * Change defaultSortOrder if this logic changes.
  */
 const defaultSortOrder: IGridSourceFilter = {
     sorted: {

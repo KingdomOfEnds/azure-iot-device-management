@@ -23,14 +23,14 @@ const OSR_METHODS_KEY = Symbol('OSR_METHODS_KEY');
 interface IAny {};
 
 interface IOSRLoggingTarget {
-    instanceName: string; 
+    instanceName: string;
     version: string;
     namespace: string;
     methodNames: string[];
 }
 
-interface IISRLoggingTarget { 
-    methodName: string; 
+interface IISRLoggingTarget {
+    methodName: string;
     version: string;
 }
 
@@ -50,13 +50,13 @@ type ConstructorFunction = new (...args: any[]) => IAny;
  * Property Decorator Factory that collects metadata used to instrument OSR logging at runtime
  * @param {string}   nameSpace   namespace to use in the logged operation name
  * @param {string}   packageName npm package name of the OSR sdk/api/package
- * @param {string[]} methodNames explicit override of method names to log 
+ * @param {string[]} methodNames explicit override of method names to log
  */
 export function logOSR(nameSpace: string, packageName: string, methodNames?: string[]) {
     return function(target: Object, prop: string) {
         if (!target[LOG_OSR_KEY]) {
             Object.defineProperty(target, LOG_OSR_KEY, { value: [] });
-        }           
+        }
 
         let version = packageJSON.dependencies[packageName],
             methodOverrides = methodNames && methodNames.length ? methodNames : null;
@@ -71,7 +71,7 @@ export function logOSR(nameSpace: string, packageName: string, methodNames?: str
  * @param  {BunyanLogger}        logger     the logger to use
  * @param  {ConstructorFunction} target     the original constructor function
  * @param  {IOSRLoggingTarget[]} properties the metadata for the properties to log
- * @param  {string}              iotHubConnStr  the connection string to the Iot Hub. 
+ * @param  {string}              iotHubConnStr  the connection string to the Iot Hub.
  */
 function instrumentOSRLogging(logger: BunyanLogger, target: ConstructorFunction, properties: IOSRLoggingTarget[], iotHubConnStr: string): void {
     properties.forEach((loggableTarget) => {
@@ -80,14 +80,14 @@ function instrumentOSRLogging(logger: BunyanLogger, target: ConstructorFunction,
             logNamespace = loggableTarget.namespace || 'default',
             logObject = this[logObjectName],
             version = loggableTarget.version;
-            
+
         // resolve the filter strategy to use
         let filter = shadowOSRFunctionFilter(logMethods);
 
         // create the function that logs OSR information tied to the specific proprty/namespace/version/host
         let osrLogger = createShadowOSRLogger(logger, logNamespace, target.name, logObjectName, version, iotHubConnStr);
 
-        // replace the original property with a shadow object that emits OSR logs 
+        // replace the original property with a shadow object that emits OSR logs
         this[logObjectName] = shadow(logObject, filter, osrLogger);
     });
 }
@@ -117,7 +117,7 @@ function logNodeOSR(logger: BunyanLogger, operationName: string, connectionStrin
             err ? false : true
         );
 
-        osr['args'] = args; 
+        osr['args'] = args;
         osr['context'] = context;
         osr['version'] = version;
 
@@ -135,8 +135,8 @@ function createShadowOSRLogger(logger: BunyanLogger, logNamespace: string, class
             context = `${className}.${logObjectName}.${methodName}`,
             connectionString = iotHubConnStr,
             originalCallback = args.pop();
-            
-        // replaces the node callback 
+
+        // replaces the node callback
         args.push(logNodeOSR(logger, operationName, connectionString, version, context, args, originalCallback));
 
         return originalMethod.apply(instance, args);
@@ -165,7 +165,7 @@ export function logISR(version?: string) {
     return function(target: Object, methodName?: string | symbol, descriptor?: ExpressHandlerDescriptor): ExpressHandlerDescriptor | void {
         if (!target[LOG_ISR_KEY]) {
             Object.defineProperty(target, LOG_ISR_KEY, { value: [] });
-        }           
+        }
 
         target[LOG_ISR_KEY].push({ methodName: methodName, version: version });
     };
@@ -179,7 +179,7 @@ export function logging() {
     // we're creating a decorator factory here instead of a plain decorator
     // because we want to call Config.get() only when the constructor is called,
     // not when target is included in a different file. This enables start.ts
-    // to initialize Config first. 
+    // to initialize Config first.
     return function (target: new (...args: any[]) => any) {
         return <new (...args: any[]) => any>extendConstructor(target, function(target) {
             const userConfig = Config.get();
@@ -187,20 +187,20 @@ export function logging() {
             let logger = new BunyanLogger({
                 name: DEFAULT_LOG_NAME,
                 streams: [
-                    { 
-                        level: userConfig.LogLevel || 'trace', 
+                    {
+                        level: userConfig.LogLevel || 'trace',
                         stream: new DMUXLogStream(userConfig.ConsoleReporting)
                     }
                 ]
             });
-                
+
             enableExceptionLogging(logger, target);
-            
+
             loggingMethods.forEach((method) => {
                 instrumentISRLogging(logger, target, method.methodName, method.version || packageJSON.version);
             });
-            
-            let loggingAPIProperties: IOSRLoggingTarget[] = target.prototype[LOG_OSR_KEY] || []; 
+
+            let loggingAPIProperties: IOSRLoggingTarget[] = target.prototype[LOG_OSR_KEY] || [];
             instrumentOSRLogging.apply(this, [logger, target, loggingAPIProperties, userConfig.IotHubConnectionString]);
         });
     };

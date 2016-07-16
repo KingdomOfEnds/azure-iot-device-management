@@ -10,29 +10,29 @@
 }
 
 .filter-operator-value {
-    padding: $filter-operator-value-padding; 
+    padding: $filter-operator-value-padding;
     text-align: right;
     width: $filter-operator-value-width;
 }
 
 .filter-value-container {
-   width: calc(100% - #{$filter-remaining});  
+   width: calc(100% - #{$filter-remaining});
 }
 
 .filters {
     .filter-title {
-        display: none; 
+        display: none;
     }
     .filter-operator-value {
-        visibility: visible; 
+        visibility: visible;
     }
-     
+
     &:first-child {
         .filter-title {
-            display: block; 
+            display: block;
         }
         .filter-operator-value {
-            visibility: hidden; 
+            visibility: hidden;
         }
     }
 }
@@ -42,14 +42,14 @@
         width: auto;
     }
     .filter-value-container {
-        width: auto;        
+        width: auto;
     }
     .filters:first-child {
         .filter-title {
-            display: none; 
+            display: none;
         }
     }
     .filter-btn-firstrowpad {
-        margin-top: 0px;  
+        margin-top: 0px;
     }
 }

@@ -8,7 +8,7 @@ import {Observable, Subject} from 'rxjs/Rx';
 
 interface IDevicePropertyMapping {
     key: string;
-    label: string; 
+    label: string;
 }
 
 @Component({
@@ -22,7 +22,7 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
      * The device that we are binding to
      */
     @Input() device: Device;
-    
+
     /**
      * Toggle for expanding/collapsing the view
      */
@@ -32,11 +32,11 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
      * The form of the device properties
      */
     public form: ControlGroup;
-    
+
     public readonlyProperties: IDevicePropertyMapping[];
-    
+
     public writeableProperties: IDevicePropertyMapping[];
-    
+
     public controls: { [key: string]: Control };
 
     constructor(private formBuilder: FormBuilder) {
@@ -63,9 +63,9 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
             { key: 'Timezone', label: this.Resources.DeviceProperties.Write.Timezone },
             { key: 'UtcOffset', label: this.Resources.DeviceProperties.Write.UTCOffset }
         ];
-        
+
         this.controls = {};
-        
+
         [].concat(this.readonlyProperties, this.writeableProperties)
             .forEach((prop) => this.controls[prop.key] = new Control(''));
 
@@ -78,7 +78,7 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
     public ngOnInit() {
         this.ngOnChanges();
     }
-    
+
     /**
      * When our input changes, rebind our textboxes
      */
@@ -86,20 +86,20 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
         // changes have occured; update properties
         Object.keys(this.controls)
             .forEach(this.updateProperty);
-    }    
+    }
 
     /**
      * Updates a single property from device properties
      */
     public updateProperty = (property: string) => {
-        let value = this.device 
-            && this.device.deviceProperties 
-            && this.device.deviceProperties[property] 
+        let value = this.device
+            && this.device.deviceProperties
+            && this.device.deviceProperties[property]
             && this.device.deviceProperties[property].value
             || '';
         this.controls[property].updateValue(value);
     }
-    
+
     /**
      * Persists changes to form elements into the original device
      */
@@ -107,7 +107,7 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
         var changes = {
             device: null
         };
-        
+
         this.writeableProperties.forEach(property => {
             if (this.controls[property.key].dirty) {
                 var deviceProperties = changes.device || {};
@@ -115,10 +115,10 @@ export class DevicePropertiesForm extends GlobalContext implements OnInit {
                 changes.device = deviceProperties;
             }
         });
-        
+
         return changes;
     }
-    
+
     /**
      * Persists a single property
      */

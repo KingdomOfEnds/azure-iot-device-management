@@ -28,7 +28,7 @@ export class Alert implements OnChanges {
             this.timer = setTimeout(() => this.dismiss(), this.dismissOnTimeout);
         }
     }
-    
+
     public ngOnDestroy() {
         this.clearDismissTimer();
     }

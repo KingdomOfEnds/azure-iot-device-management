@@ -56,7 +56,7 @@ var retestClient = taskFactory({
     'retest:client': (done) => {
         require('karma').Server.start({
             configFile: path.join(__dirname, config.karmaPath)
-        }, 
+        },
         (exitCode) => {
             if (exitCode) {
                 console.log("\n*****************************");

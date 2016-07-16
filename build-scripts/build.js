@@ -28,7 +28,7 @@ var applyCopyright = (done) => (err, files) => {
         content = config.copyrightNotice + content;
         fs.writeFileSync(file, content, 'utf8');
     });
-    
+
     done();
 }
 
@@ -67,7 +67,7 @@ var build = taskFactory({
             .pipe(sourcemaps.write('maps', { includeContent: false }))
             .pipe(gulp.dest(config.serverDest));
     },
-    'build:html': () => 
+    'build:html': () =>
         copy(config.clientDir + '.html', config.clientDest),
     'build:sass': () =>
         gulp.src(config.clientDir + '.scss')

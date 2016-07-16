@@ -26,7 +26,7 @@ describe('Device Grid Configuration Tests', () => {
         sessionStorage.clear();
         localStorage.clear();
     });
-    
+
     it('uses default device grid configuration when none present', done => {
         var state = new ConfigurationService();
         state.CurrentDeviceGridView.subscribe(config => {
@@ -34,7 +34,7 @@ describe('Device Grid Configuration Tests', () => {
             done();
         });
     });
-    
+
     it('uses session storage grid configuration if present', done => {
         var fakeConfig = { name: 'test' };
         sessionStorage.setItem(StorageKeys.CurrentDeviceGridView, JSON.stringify(fakeConfig));
@@ -44,7 +44,7 @@ describe('Device Grid Configuration Tests', () => {
             done();
         });
     });
-    
+
     afterEach(() => {
         // clear out storage
         sessionStorage.clear();

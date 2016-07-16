@@ -101,7 +101,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
 
     public currentColumns: BehaviorSubject<IGridColumn[]> = new BehaviorSubject([]);
     public availableColumns: BehaviorSubject<IGridColumn[]> = new BehaviorSubject(DeviceGridAvailableColumns);
-    
+
     public currentFilters: BehaviorSubject<FilterValue<IGridFilter>[]> = new BehaviorSubject([]);
     public availableFilters = DeviceGridAvailableFilters;
 
@@ -149,7 +149,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
             .first()
             .subscribe((gridRels: HalLinks) => {
                 if (this.currentValidRels) {
-                    // rels already set by edit routing 
+                    // rels already set by edit routing
                     this.relsToRestore = gridRels;
                 } else {
                     this.currentValidRels = gridRels;
@@ -163,7 +163,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
             this.selectedConfiguration.value.columns = columns;
             this.gridConfigurationUnsaved = true;
         });
-        this.gridSource.subscribeTo(this.selectedConfiguration);    
+        this.gridSource.subscribeTo(this.selectedConfiguration);
     }
 
     private setColumnSelection() {
@@ -173,7 +173,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
     public getColumnLabel(column: IGridColumn | IGridFilter) {
         return column.name;
     }
-    
+
     public getColumnId(column: IGridFilter) {
         return column.model + '.' + column.key;
     }
@@ -317,7 +317,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
         this.searchDevice = null;
 
         this.refreshCurrentDevice = this.loadDevice(deviceId, (err) => {
-            // first time we enter edit form for device we have 
+            // first time we enter edit form for device we have
             // set up the reduced rels. because we err'd out just reset.
             this.resetUI();
             this.alert = new Alert(AlertType.Danger, this.Resources.DeviceGrid.titleAlertGetDeviceError);
@@ -332,7 +332,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
 
             return this.dataService.getDevice(deviceId, this.currentValidRels).subscribe(
                 (res: HalResponse<Device>) => {
-                    // returning rels from the response should also contain a rel to keep 
+                    // returning rels from the response should also contain a rel to keep
                     // the current UI state i.e. in this case devices:edit should be included.
                     this.currentValidRels = res.links;
                     this.editableDevice = res.data;
@@ -406,8 +406,8 @@ export class DeviceGrid extends GlobalContext implements OnInit {
                 this.scheduleJob(params);
             };
             this.onCancel = () => {
-                // here we have to reset the UI but we need to also reset the rels 
-                // because we've done a local change. 
+                // here we have to reset the UI but we need to also reset the rels
+                // because we've done a local change.
                 this.onConfirm = null;
                 this.isConfirming = false;
                 this.resetUI();
@@ -530,7 +530,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
 
         this.currentValidRels = this.relsToRestore;
 
-        // manually clear the location 
+        // manually clear the location
         this.location.go('');
     };
 
@@ -545,7 +545,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
         this.selectedDevices = [];
         this.gridSource.update();
         this.resetUI();
-        
+
         let response = res.data;
         if (response._import.error > 0) {
             let msg = this.Resources.Common.partialFailureMessage
@@ -628,7 +628,7 @@ export class DeviceGrid extends GlobalContext implements OnInit {
             filter.option.in = [filter.value];
             return clone(filter.option);
         }).filter(filter => !!filter);
-        
+
         this.selectedConfiguration.value.filters = filters || null;
 
         if (!gridConfigEquals(this.gridState.CurrentDeviceGridView.value, this.selectedConfiguration.value)) {

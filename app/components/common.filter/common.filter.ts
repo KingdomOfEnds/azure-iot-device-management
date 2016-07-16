@@ -22,22 +22,22 @@ export interface FilterValue<T> {
     styleUrls: ['dist/app/components/common.filter/common.filter.css']
 })
 export class FilterEditor<T> extends GlobalContext {
-    
+
     /**
      * This is used to get the id for each option, which is used to populate the option select
      */
     @Input() public getId: (T) => string;
-    
+
     /**
      * This is used to get the label for each option, which is used to represent it in the option select
      */
     @Input() public getLabel: (T) => string;
-    
+
     /**
      * These are the options that can be selected to filter on
      */
     @Input() public options: T[];
-    
+
     /**
      * This is an observable of the current filters that is updated with each change
      */

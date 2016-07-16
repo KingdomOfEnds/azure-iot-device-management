@@ -23,7 +23,7 @@ export class DataService {
     public requestsInFlight: Observable<number>;
 
     constructor(private http: Http, private loggerService?: LoggerService) {
-        // Top level RELs for the WebAPI are loaded here. They should never need to 
+        // Top level RELs for the WebAPI are loaded here. They should never need to
         // be loaded again unless the WebAPI creates dynamic top level RELs
 
         this.requestsInFlight = this._requestsInFlight.debounce(function(x) { return Observable.timer(50); });

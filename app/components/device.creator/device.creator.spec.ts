@@ -100,7 +100,7 @@ describe('Device Tests', () => {
     ]);
 
     beforeEach(inject(
-        [FormBuilder, ServicePropertiesForm, KeyValueInput, TagInput, ToggleInput], 
+        [FormBuilder, ServicePropertiesForm, KeyValueInput, TagInput, ToggleInput],
         (formBuilder: FormBuilder, servicePropForm: ServicePropertiesForm, keyValueInput: KeyValueInput, tagInput: TagInput, toggleInput: ToggleInput) => {
             inspectReq = () => { };
 
@@ -115,8 +115,8 @@ describe('Device Tests', () => {
             fakeHttp = <any>{
                 request: (url, opts, headers) => {
 
-                    let parsedJson = JSON.parse(opts.body);                
-                    
+                    let parsedJson = JSON.parse(opts.body);
+
                     if (parsedJson != null) {
                         inspectReq(parsedJson);
                     }
@@ -134,9 +134,9 @@ describe('Device Tests', () => {
 
             servicePropForm.propertiesValueControl.ngOnChanges(<any>{});
             servicePropForm.propertiesValueControl.ngOnInit();
-        
+
             servicePropForm.tagControl.ngOnChanges();
-        
+
             servicePropForm.ngOnChanges(<any>{
                 device: {
                     previousValue: {}
@@ -144,7 +144,7 @@ describe('Device Tests', () => {
             });
 
             servicePropForm.ngOnInit();
-            
+
             dataService = new DataService(fakeHttp);
             device = new Device(formBuilder, dataService);
 

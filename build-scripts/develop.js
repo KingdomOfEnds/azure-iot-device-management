@@ -37,7 +37,7 @@ var restartServer = () => {
     runningServer = spawn('node', ['./' + config.serverDest + '/start'], {
         env: updatedEnv
     });
-    
+
     runningServer.stdout.on('data', (output) => console.log(output.toString()));
     runningServer.stderr.on('data', (output) => console.log(output.toString()));
 

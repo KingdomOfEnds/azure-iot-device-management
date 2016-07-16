@@ -32,7 +32,7 @@ const modelHanders = {
     'calculated': key => datum => {
         // special calculated cases
         switch (key) {
-            case 'parent-child': 
+            case 'parent-child':
                 return !datum.parentJobId
                     ? Resources.JobProperties.IsParent
                     : Resources.JobProperties.IsChild;
@@ -63,24 +63,24 @@ export class HistoryGrid extends GlobalContext {
     public hideDetails: boolean;
     public HistNavConfiguration: {};
     public editorVisible: boolean = false;
-    
+
     // Grid configurations
     public gridConfiguration: GridConfiguration<Job>;
     public selectedConfiguration: BehaviorSubject<IGridConfiguration>;
     public availableConfigurations: IGridConfiguration[];
 
     public searchJob: string;
-    
+
     public viewFilterUnsaved: boolean = false;
 
     public gridConfigurationUnsaved: boolean = false;
-    
+
     public availableColumns: BehaviorSubject<IGridColumn[]> = new BehaviorSubject<IGridColumn[]>(HistoryGridAvailableColumns);
     public currentColumns: BehaviorSubject<IGridColumn[]> = new BehaviorSubject<IGridColumn[]>([]);
 
     public currentFilters: BehaviorSubject<FilterValue<IGridFilter>[]> = new BehaviorSubject([]);
     public availableFilters = HistoryGridAvailableFilters;
-    
+
     constructor(
         public gridSource: HistoryGridSource,
         public gridState: ConfigurationService,
@@ -96,11 +96,11 @@ export class HistoryGrid extends GlobalContext {
         this.gridState.AvailableHistoryGridViews.subscribe(availableGridViews => {
             this.onAvailableConfigurationsLoaded(availableGridViews);
         });
-        
+
         this.gridState.CurrentHistoryGridView.subscribe(currentGridView => {
             this.selectConfiguration(currentGridView);
         });
-        
+
         this.currentJob = new Job();
         this.hideDetails = true;
     }
@@ -137,7 +137,7 @@ export class HistoryGrid extends GlobalContext {
         job.jobId = jobId;
         this.onJobDoubleClick(job);
         this.gridSource.selection.next({});
-        this.gridSource.select(jobId); 
+        this.gridSource.select(jobId);
         this.searchJob = '';
     }
 
@@ -185,9 +185,9 @@ export class HistoryGrid extends GlobalContext {
     }
 
     private onQueryJobSuccess = (res: HalResponse<Job[]>) => {
-                        
+
         document.body.scrollIntoView();
-        
+
         let job = res.data.filter(j => j.jobId === this.currentJobId)[0];
 
         if (!job || job.status === 'unknown') {
@@ -211,7 +211,7 @@ export class HistoryGrid extends GlobalContext {
         this.resetDetails();
         this.alert = new Alert(AlertType.Danger, this.Resources.HistoryGrid.jobFailureAlert);
     };
-    
+
     public resetDetails() {
         this.hideDetails = true;
         this.currentActiveNavButton = null;
@@ -242,13 +242,13 @@ export class HistoryGrid extends GlobalContext {
     private setColumnSelection() {
         this.currentColumns.next(this.selectedConfiguration.value.columns);
     }
-    
+
     public getColumnLabel(column: IGridColumn | IGridFilter) {
         return column.name;
     }
 
     private setFilters(): void {
-        let filters: FilterValue<IGridFilter>[] 
+        let filters: FilterValue<IGridFilter>[]
             = this.selectedConfiguration.value.filters.map((filter) => {
                 // Note: we currently only support single values, not arrays
                 let value = filter.in[0];
@@ -276,7 +276,7 @@ export class HistoryGrid extends GlobalContext {
             selectionStyle: SelectionStyle.SingleSelect
         };
     }
-    
+
     public searchKeyPress($event: KeyboardEvent) {
         // enter key
         if ($event.keyCode === 13) {
@@ -309,7 +309,7 @@ export class HistoryGrid extends GlobalContext {
         this.setFilters();
         this.setGridConfiguration();
     }
-    
+
     public onViewFilterChange() {
         this.gridConfigurationUnsaved = true;
     }
@@ -325,12 +325,12 @@ export class HistoryGrid extends GlobalContext {
             this.availableConfigurations.push(configuration);
         }
         this.applyFilter();
-                
+
         this.gridState.AvailableHistoryGridViews.next(this.availableConfigurations);
         this.alert = new Alert(AlertType.Success, this.Resources.DeviceGrid.titleAlertViewSaved, true, 5000);
         this.gridConfigurationUnsaved = false;
     }
-    
+
     public getColumnId(filter: IGridFilter) {
         return filter.model + '.' + filter.key;
     }

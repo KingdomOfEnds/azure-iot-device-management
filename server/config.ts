@@ -6,22 +6,22 @@ import {config} from '@azure-iot/configuration';
 
 export class Config {
     constructor(
-        /** 
+        /**
          * {string} connStr Connection string to the IoTHub.
          */
         public IotHubConnectionString: string,
-        
+
         /**
          * {string} Console reporting source ("server", "client", or "both").
          */
         public ConsoleReporting: string,
-        
+
         /**
-         * {string} The Log Level. See https://github.com/trentm/node-bunyan#levels 
+         * {string} The Log Level. See https://github.com/trentm/node-bunyan#levels
          * for acceptable values.
          */
         public LogLevel: string,
-        
+
         /**
          * {string} The port to listen on.
          */
@@ -31,7 +31,7 @@ export class Config {
          * {boolean} Is Caching Enabled
          */
         public CachingEnabled: boolean,
-        
+
         /**
          * (Optional) Settings for the Authentication module.
          */
@@ -40,26 +40,26 @@ export class Config {
             mongoUri: string,
             sessionSecret: string
         }) {}
-    
+
     private static instance: Config = null;
-    
+
     /**
-     * Returns the Config singleton instance. This method should only 
+     * Returns the Config singleton instance. This method should only
      * be called after Config.initialize() has been run.
      */
     public static get(): Config {
         if (!Config.instance) {
             throw new Error('Config has not yet been initialized');
         }
-        
+
         return Config.instance;
     }
-    
+
     /**
      * Initializes configuration from either the Config Service or user-config.json.
-     * If process.env.CONFIG_URL is specified, this function waits till the settings 
+     * If process.env.CONFIG_URL is specified, this function waits till the settings
      * are available in the Config Service.
-     * Otherwise, the configuration is initialized from user-config.json.   
+     * Otherwise, the configuration is initialized from user-config.json.
      */
     public static async initialize(): Promise<Config> {
         await config.initialize({
@@ -73,7 +73,7 @@ export class Config {
             }
         });
 
-        const hubConnStr = config.getString('IOTHUB_CONNECTION_STRING');        
+        const hubConnStr = config.getString('IOTHUB_CONNECTION_STRING');
         if (!/(^|;)HostName=/i.test(hubConnStr)) {
             throw new Error('IOTHUB_CONNECTION_STRING was not filled out correctly; please fill out the information in configuration');
         }

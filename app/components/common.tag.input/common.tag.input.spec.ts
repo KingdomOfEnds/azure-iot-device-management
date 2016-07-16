@@ -13,10 +13,10 @@ injectAsync
 import {TagInput, MAX_ALLOWED_TAGS} from './common.tag.input';
 
 describe('TagInput Tests', () => {
-    
+
     let tagInput: TagInput;
     let enter: KeyboardEvent;
-    
+
     beforeEach(() => {
         tagInput = new TagInput();
         enter = <any>{ preventDefault: () => { }, keyCode: 13 };

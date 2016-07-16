@@ -19,23 +19,23 @@ const npmPackage = require('../package.json');
  * @param {string} log Optional. If specified, the output of the command is written
  * directly to the current console. Otherwise, the command's stdout is buffered
  * and returned as a string.
- * @return {string} The command's stdout as a string, if 'log' isn't specified. 
+ * @return {string} The command's stdout as a string, if 'log' isn't specified.
  * Otherwise, an empty string is returned.
  */
 function docker(cmd, log) {
     if (log) {
         process.stdout.write(log + '...\n');
     }
-    
+
     let result = proc.spawnSync('docker', cmd, {stdio: (log ? 'inherit' : 'pipe')});
     if (result.status) {
         if (result.stderr) {
             process.stderr.write(result.stderr.toString());
         }
-        
+
         throw new Error(`${cmd} returned error code ${result.status}`);
     }
-        
+
     return result.stdout ? result.stdout.toString() : '';
 }
 
@@ -69,7 +69,7 @@ program
         if (options.clean) {
             program.emit('clean');
         }
-        
+
         docker(['build', '-t', `${image_name()}:latest`, '-t', `${image_name()}:${npmPackage.version}`, '.'], `Building image ${image_name()}:${npmPackage.version}`);
         if (options.save) {
             let filename = typeof options.save === 'string' ? options.save : program.image + '.tar';
@@ -85,7 +85,7 @@ program
         const image = `${image_name()}:${tag || npmPackage.version}`;
         docker(['push', image], `Pushing ${image}`);
     });
-    
+
 program
     .command('clean')
     .description('remove the image from the local images')
@@ -94,7 +94,7 @@ program
         if (options.force) {
             program.emit('kill');
         }
-        
+
         // Docker will fail if we try to remove a nonexistant image; make sure it exists
         if (docker(['images', '-q', image_name()])) {
             docker(['rmi', image_name()], `Cleaning image ${image_name()}`);

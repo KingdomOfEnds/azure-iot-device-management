@@ -10,12 +10,12 @@ export function shadow<T>(instance: T, shouldProxy: (prop: string) => boolean, e
             // this grabs the latest value of the prop in case a method call that isn't
             // proxied redefines one that is
             var base: any = instance[prop];
-            
+
             // functions must be treated differently as they have both a value and a context to
             // worry about
             if (base instanceof Function) {
                 if (shouldProxy(prop)) {
-                    // return a function proxying the original 
+                    // return a function proxying the original
                     return function(...args: any[]) {
                         return extraLogic(instance, prop, base, args);
                     };

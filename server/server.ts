@@ -22,10 +22,10 @@ import {Config} from './config';
 
 export async function initialize(): Promise<express.Express> {
     const app = express();
-    
+
     // uncomment after placing your favicon in /public
     // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-    
+
     const config = Config.get();
 
     // if caching is not enabled, then we need to disable it
@@ -42,28 +42,28 @@ export async function initialize(): Promise<express.Express> {
     }
 
     if (config.Auth) {
-        // initialize authentication module and set up middleware that 
+        // initialize authentication module and set up middleware that
         // ensures the user is authenticated:
         const auth = await Authentication.initialize(
             app,
             config.Auth.loginUrl,
             config.Auth.sessionSecret,
             config.Auth.mongoUri);
-        
-        app.use(auth.ensureAuthenticated);   
+
+        app.use(auth.ensureAuthenticated);
     }
-    
+
     if (config.ConsoleReporting === 'both' || config.ConsoleReporting === 'client') {
         app.use(logger('dev'));
     }
-    
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
-    
+
     // initialize routes:
     app.use(appRoute);
-    
+
     app.use('/api/devices', route(new DeviceAPI(config.IotHubConnectionString)));
     app.use('/api/jobs', route(new JobAPI(config.IotHubConnectionString)));
     app.use('/api/discovery', hal.discovery);
@@ -73,7 +73,7 @@ export async function initialize(): Promise<express.Express> {
 
     // error handlers
     app.use(error500Handler);
-    
+
     return app;
 }
 

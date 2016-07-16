@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/Rx';
 export type QueryFunction<T> = (skip?: number, count?: number, query?: QueryExpression, currentWorkspaceRels?: HalLinks) => Observable<HalResponse<T[]>>;
 
 /**
- * QueryGridSource is an implemention of IGridSource<T> that pulls data from the services using IoTHub query expressions 
+ * QueryGridSource is an implemention of IGridSource<T> that pulls data from the services using IoTHub query expressions
  */
 @Injectable()
 export class QueryGridSource<T> extends GridSource<T> {
@@ -26,7 +26,7 @@ export class QueryGridSource<T> extends GridSource<T> {
     public query: QueryExpression = new QueryExpression();
 
     public currentValidRels: Subject<HalLinks>;
-    
+
     /**
      * This is the interval variable used to close out the interval on clean up
      */
@@ -44,14 +44,14 @@ export class QueryGridSource<T> extends GridSource<T> {
         super();
 
         this.currentValidRels = new Subject<HalLinks>();
-        
-        // set filter to default sorting strategy 
+
+        // set filter to default sorting strategy
         this.filter.next(defaultSortOrder);
-        
+
         // poll for updates
         this.poll(false);
     }
-    
+
     // Selects any visible current values
     public select(id: string): void {
         this.openViews.forEach(view => {
@@ -68,11 +68,11 @@ export class QueryGridSource<T> extends GridSource<T> {
             }
         });
     }
-    
-    
+
+
     // Subscribes to the current selected configuration
     public subscribeTo = (selectedConfiguration: BehaviorSubject<IGridConfiguration>) => {
-        
+
         // subscribe to selected configuration
         selectedConfiguration.subscribe(configuration => {
             this.query = new QueryExpression();
@@ -81,16 +81,16 @@ export class QueryGridSource<T> extends GridSource<T> {
             this.update();
         });
 
-        // subscribe to filter 
+        // subscribe to filter
         this.filter.subscribe(gridFilter => {
             this.sortColumn(gridFilter, selectedConfiguration.value);
         });
     };
-    
+
     // Constructs the filter expression based on the filters of grid confguration
     private constructFilterExpression = (configuration: IGridConfiguration) => {
         if (configuration.filters.length > 0) {
-            // construct root logical expression - and logical operator will be used for everything in this expression 
+            // construct root logical expression - and logical operator will be used for everything in this expression
             let parentLogicalExpression = new LogicalExpression(LogicalOperatorType.and, []);
             configuration.filters.forEach(filter => {
                 this.constructFiltersExpression(filter, parentLogicalExpression);
@@ -104,12 +104,12 @@ export class QueryGridSource<T> extends GridSource<T> {
         if (filter && filter.key) {
             let model = this.changeTagsModel(filter.key, filter.model);
             if (filter.isArray) {
-                // if the column is an array, use all comparison operator and send the array as the value (filter.in) 
+                // if the column is an array, use all comparison operator and send the array as the value (filter.in)
                 let queryProp = new QueryProperty(filter.key, model);
                 let comparisonExpression = new ComparisonExpression(queryProp, filter.in, ComparisonOperatorType.All);
                 parentLogicalExpression.filters.push(comparisonExpression);
             } else {
-                // if the column is not array generate a comparison expression for each value in the array - use or as the logical operator 
+                // if the column is not array generate a comparison expression for each value in the array - use or as the logical operator
                 let logicalExpression = new LogicalExpression(LogicalOperatorType.and, []);
                 filter.in.forEach(value => {
                     let queryProp = new QueryProperty(filter.key, model);
@@ -124,7 +124,7 @@ export class QueryGridSource<T> extends GridSource<T> {
     // Constructs the projection expression based on the columns of grid confguration
     private constructProjectionExpression = (configuration: IGridConfiguration) => {
         if (configuration.columns && configuration.columns.length > 0) {
-            // Use projection only when all projected fields are indexed 
+            // Use projection only when all projected fields are indexed
             if (this.checkIfAllAreIndexed(configuration.columns)) {
                 let queryProperties: QueryProperty[] = [];
                 for (let column of configuration.columns) {
@@ -137,8 +137,8 @@ export class QueryGridSource<T> extends GridSource<T> {
             }
         }
     };
-    
-    // Constructs query with sort expression and calls the API 
+
+    // Constructs query with sort expression and calls the API
     private sortColumn = (gridFilter: IGridSourceFilter, gridConfiguration: IGridConfiguration) => {
         let sorted = gridFilter.sorted;
         if (sorted) {
@@ -149,7 +149,7 @@ export class QueryGridSource<T> extends GridSource<T> {
             this.update();
         }
     };
-    
+
     // Gets the sort order (ascending/descending) of the query expression
     public getSortOrder = (asc: boolean): string => {
         if (asc)
@@ -157,8 +157,8 @@ export class QueryGridSource<T> extends GridSource<T> {
         else
             return SortOrder.desc;
     };
-    
-    // Find the model of the given columnKey from the current configuration 
+
+    // Find the model of the given columnKey from the current configuration
     public getModel = (columnKey: string, gridConfiguration: IGridConfiguration) => {
         let model: string;
         gridConfiguration.columns.forEach(column => {
@@ -168,9 +168,9 @@ export class QueryGridSource<T> extends GridSource<T> {
         });
         return model;
     };
- 
-    // Query by projection doesn't let us use all the fields we want to project (ex: Status). 
-    // This check can be removed when projection by all fields is allowed  
+
+    // Query by projection doesn't let us use all the fields we want to project (ex: Status).
+    // This check can be removed when projection by all fields is allowed
     public checkIfAllAreIndexed = (columns: any): boolean => {
         for (let column of columns) {
             if (column.indexed === false)
@@ -179,8 +179,8 @@ export class QueryGridSource<T> extends GridSource<T> {
         return true;
     };
 
-    // Although tags is under service properties, you have to send it as type = default in queries  
-    // This can be removed once tags can be send with type 'service' in query 
+    // Although tags is under service properties, you have to send it as type = default in queries
+    // This can be removed once tags can be send with type 'service' in query
     public changeTagsModel = (columnKey: string, columnModel: string): string => {
         let model = columnModel;
         if (columnKey === 'tags') {
@@ -203,7 +203,7 @@ export class QueryGridSource<T> extends GridSource<T> {
         }
         return !!this.intervalId;
     };
-    
+
     /**
     * This will force an update to all open views. It is also called periodically.
     */
