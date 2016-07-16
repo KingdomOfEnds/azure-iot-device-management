@@ -15,5 +15,5 @@ require('./build-scripts/build.js');
 require('./build-scripts/develop.js');
 require('./build-scripts/test.js');
 require('./build-scripts/bundle.js');
-require('./diff-cleaner/precommit.js');
-require('./diff-cleaner/trim.js');
+require('diff-cleaner/precommit.js');
+require('diff-cleaner/trim.js');
