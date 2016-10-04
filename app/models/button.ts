@@ -12,9 +12,9 @@ export class Button<T> {
 }
 
 export class HalButton<T> extends Button<T> {
-        
+
     public rel: string;
-    
+
     public method: string;
 
     constructor(label: string, action: T, rel: string, method: string) {

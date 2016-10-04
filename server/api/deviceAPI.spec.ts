@@ -54,13 +54,13 @@ describe('Device API', () => {
         it('Should Add devices', (done) => {
 
             var deviceId = uuid.v4();
-            var expected = { 
+            var expected = {
                 deviceId: deviceId,
-                authentication: { 
+                authentication: {
                     symmetricKey: {
-                        primaryKey: 'primKey' 
+                        primaryKey: 'primKey'
                     }
-                } 
+                }
             };
 
             request.body = expected;
@@ -98,14 +98,14 @@ describe('Device API', () => {
         it('Should handle successfuly getting a device', (done) => {
 
             var deviceId = uuid.v4();
-            var expected = { 
+            var expected = {
                 deviceId: deviceId,
                 status: true,
-                authentication: { 
+                authentication: {
                     symmetricKey: {
-                        primaryKey: 'primKey' 
+                        primaryKey: 'primKey'
                     }
-                } 
+                }
             };
 
             // this is a GET test so modify the req
@@ -195,9 +195,9 @@ describe('Device API', () => {
                 serviceProperties = {
                     'testProp': 'testVal'
                 },
-                expected = { 
+                expected = {
                     'deviceId': deviceId,
-                    'serviceProperties': serviceProperties 
+                    'serviceProperties': serviceProperties
                 };
 
             // this is a POST test so modify the res
@@ -280,8 +280,8 @@ describe('Device API', () => {
                     })
                 },
                 expected = {
-                    'test1' : 'test', 
-                    'test2' : 'test', 
+                    'test1' : 'test',
+                    'test2' : 'test',
                     'test3' : 'test'
                 };
 

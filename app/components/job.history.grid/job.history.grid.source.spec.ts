@@ -98,10 +98,10 @@ describe('History Grid Source Tests', () => {
         spyOn(fakeDataService, 'getJobs').and.callFake(() => fakeGetJobsCall);
 
         fakeGetJobsCall = jasmine.createSpyObj('Observable', ['subscribe']);
-        
+
         baseSetInterval = setInterval;
         window.setInterval = <any>jasmine.createSpy('setInterval').and.callFake(() => fakeIntervalId);
-        
+
         /**
          * Construct the grid source with the fake data
          */
@@ -125,5 +125,3 @@ describe('History Grid Source Tests', () => {
         window.setInterval = baseSetInterval;
     });
 });
-
-        

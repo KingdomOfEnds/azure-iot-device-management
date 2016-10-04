@@ -20,7 +20,7 @@ $tag-text-color: white;
 }
 
 .tag:last-of-type {
-	border-right: $tag-border;    
+	border-right: $tag-border;
 }
 
 .tag > .glyphicon-remove {
@@ -29,10 +29,10 @@ $tag-text-color: white;
 	color: $tag-text-color;
 	text-decoration: none!important;
 	cursor: pointer;
-	
+
 	&:hover {
 		color: $btn-default-border;
-	} 
+	}
 }
 
 .input-group > .form-control:last-child {

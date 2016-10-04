@@ -12,15 +12,15 @@ export enum ConsoleReporting {
 // stolen mostly from sim
 export class DMUXLogStream {
     public isEnabled: boolean;
-    
+
     constructor(report: string) {
         this.isEnabled = (
-            report === ConsoleReporting[ConsoleReporting.both] || 
+            report === ConsoleReporting[ConsoleReporting.both] ||
             report === ConsoleReporting[ConsoleReporting.server]);
     }
-    
+
     write(log: string) {
-        if (this.isEnabled) {            
+        if (this.isEnabled) {
             let logJson = JSON.parse(log);
             let time = new Date(logJson.time);
             let timestamp = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${time.getMilliseconds()}`;

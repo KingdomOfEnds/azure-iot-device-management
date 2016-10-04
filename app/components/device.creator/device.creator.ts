@@ -36,7 +36,7 @@ export const KB = 1024;
 export const MAX_FILE_SIZE_BYTES = 10 * KB; // 10kb
 
 /**
- * Currently only accepting .csv files 
+ * Currently only accepting .csv files
  * @type {Array<String>}
  */
 export const ACCEPTED_FILE_EXTENSIONS = ['.csv'];
@@ -57,7 +57,7 @@ export class Device extends GlobalContext implements OnInit {
     public creationAlert: Alert = null;
     public bulkAlert: Alert = null;
     public alert: Alert = null;
-    
+
     public exampleCSVurl = exampleUrl;
 
     public createdDevice: DeviceModel;
@@ -83,8 +83,8 @@ export class Device extends GlobalContext implements OnInit {
         this.dataService.discovery()
             .subscribe((val: HalLinks) => {
 
-                // as i've come here to do 'device:new' i need to give the hateoas Api  
-                // the follow on set of rels so it can do the lookup of the next 
+                // as i've come here to do 'device:new' i need to give the hateoas Api
+                // the follow on set of rels so it can do the lookup of the next
                 // state's href. for us this we are expecting to have 'devices:add'
 
                 this.dataService.hateoasApi('devices:new', 'GET', null)
@@ -99,14 +99,14 @@ export class Device extends GlobalContext implements OnInit {
 
                 if (!this.model.bulkAddFileUploader) {
                     let fileUploader = new FileUploader({ url: urlForBulk });
-                                        
+
                     fileUploader.onSuccessItem = this.onBulkAddSuccess;
                     fileUploader.onErrorItem = this.onBulkAddError;
                     fileUploader.onWhenAddingFileFailed = this.onAddingBulkAddFileFailed;
                     fileUploader.onAfterAddingFile = this.onAfterAddingBulkAddFile;
                     fileUploader.onBeforeUploadItem = this.onBeforeUploadingBulkAddFile;
 
-                    // TODO - ng2-file-upload: Issue #220: Can't upload same file twice 
+                    // TODO - ng2-file-upload: Issue #220: Can't upload same file twice
                     this.model.bulkAddFileUploader = fileUploader;
 
                     this.bulkAddLoaded();
@@ -200,7 +200,7 @@ export class Device extends GlobalContext implements OnInit {
             let msg = this.Resources.Device.titleAlertAddDevicesSuccess + item.file.name;
             this.bulkAlert = new Alert(AlertType.Success, msg);
         }
-        
+
         this.model.bulkAddFileName = '';
 
         this.bulkAddInvalidFile();
@@ -299,7 +299,7 @@ export class Device extends GlobalContext implements OnInit {
         this.resetAlerts();
         this.createdDevice = null;
     }
-    
+
     public resetAlerts() {
         this.alert = this.bulkAlert = this.creationAlert = null;
     }

@@ -91,14 +91,14 @@ function bindDeviceInput(servicePropForm: ServicePropertiesForm,  propertySuffix
 
     // rebind subcomponent inputs
     servicePropForm.propertiesValueControl.keyValueMap = <any>servicePropForm.properties();
-    servicePropForm.tagControl.tags = servicePropForm.tags();            
+    servicePropForm.tagControl.tags = servicePropForm.tags();
     servicePropForm.enabledControl.value = servicePropForm.enabled();
-    
+
     // call onchange to trigger updates in child components
     servicePropForm.propertiesValueControl.ngOnChanges(propertiesChanges);
     servicePropForm.tagControl.ngOnChanges();
 
-    servicePropForm.deviceConnectionString = devConnStr; 
+    servicePropForm.deviceConnectionString = devConnStr;
 
     return device;
 }
@@ -114,9 +114,9 @@ describe('ServicePropertiesForm Tests', () => {
         TagInput,
         ToggleInput
     ]);
-    
+
     beforeEach(inject(
-        [FormBuilder, KeyValueInput, TagInput, ToggleInput], 
+        [FormBuilder, KeyValueInput, TagInput, ToggleInput],
         (formBuilder: FormBuilder, keyValueInput: KeyValueInput, tagInput: TagInput, toggleInput: ToggleInput) => {
             servicePropForm = new ServicePropertiesForm(formBuilder);
 
@@ -126,17 +126,17 @@ describe('ServicePropertiesForm Tests', () => {
             servicePropForm.enabledControl = toggleInput;
         }
     ));
-    
+
     it('should construct', () => {
         expect(servicePropForm).toBeDefined();
     });
 
     describe('Starting with a device', () => {
         beforeEach(() => {
-            let device = bindDeviceInput(servicePropForm, initialSuffix);            
+            let device = bindDeviceInput(servicePropForm, initialSuffix);
 
             simulateInitialLifetimeMethods(servicePropForm);
-        });  
+        });
 
         it('initializes the form fields', () => {
             checkFieldValues(servicePropForm, initialSuffix);
@@ -146,12 +146,12 @@ describe('ServicePropertiesForm Tests', () => {
             expect(servicePropForm.isReadonly).toBe(false);
         });
 
-    });    
+    });
 
     describe('Starting without a device', () => {
         beforeEach(() => {
-            simulateInitialLifetimeMethods(servicePropForm);            
-        });  
+            simulateInitialLifetimeMethods(servicePropForm);
+        });
 
         it('should not be readonly', () => {
             expect(servicePropForm.isReadonly).toBe(false);
@@ -200,7 +200,7 @@ describe('ServicePropertiesForm Tests', () => {
                     // test that the functions bound in the template will clear the inputs
                     expect(servicePropForm.tags()).toBeFalsy();
                     expect(servicePropForm.properties()).toBeFalsy();
-                    
+
                     // enabled by default
                     expect(servicePropForm.enabled()).toBeTruthy();
 

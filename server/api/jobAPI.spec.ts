@@ -26,18 +26,18 @@ describe('Job API Tests', () => {
         jobAPI = new JobAPI(connStr);
         expect(jobAPI).toBeDefined();
 
-        
+
     });
 
     beforeEach(() => {
         deviceId = uuid.v4();
-          
+
         // Add device
         let device: Device = new Device();
         device.deviceId = deviceId;
         device.serviceProperties.tags[0] = 'tag1';
         device.serviceProperties.tags[1] = 'tag2';
-    
+
         request = jasmine.createSpyObj('request', ['params', 'body']);
         response = jasmine.createSpyObj('response', ['json', 'locals']);
     });
@@ -66,7 +66,7 @@ describe('Job API Tests', () => {
 
             jobAPI.FirmwareUpdateDevices(request, response, null);
         });
-        
+
         it('passes error onto next', (done) => {
             let error = new Error();
 
@@ -109,7 +109,7 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('passes error onto next', (done) => {
             let error = new Error();
 
@@ -152,7 +152,7 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('passes error onto next', (done) => {
             let error = new Error();
 
@@ -196,7 +196,7 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('passes error onto next', (done) => {
             let error = new Error();
 
@@ -213,7 +213,7 @@ describe('Job API Tests', () => {
                 done();
             });
         });
-        
+
     });
 
     describe('WriteDeviceProperties', () => {
@@ -241,7 +241,7 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('passes error onto next', (done) => {
             let error = new Error();
 
@@ -285,7 +285,7 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('on error passes onto next', (done) => {
             let error = new Error();
 
@@ -305,7 +305,7 @@ describe('Job API Tests', () => {
     });
 
     describe('GetJob', () => {
-        
+
         it('should get a job', (done) => {
             let expected = {
                 jobId : 'jobId1'
@@ -330,18 +330,18 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('should pass an error onto next handler', (done) => {
             let error = new Error();
-            
+
             response.json.and.callFake(function(result) {
                 done.fail();
             });
-            
+
             spyOn(jobAPI.jobClient, 'getJob').and.callFake(function (query, callback) {
                 callback(error, null);
             });
-            
+
             jobAPI.GetJob(request, response, nextError => {
                 expect(nextError).toEqual(error);
                 done();
@@ -369,18 +369,18 @@ describe('Job API Tests', () => {
                 done.fail();
             });
         });
-        
+
         it('should pass an error onto next handler', (done) => {
             let error = new Error();
-            
+
             response.json.and.callFake(function(result) {
                 done.fail();
             });
-            
+
             spyOn(jobAPI.jobClient, 'queryJobHistory').and.callFake(function (query, callback) {
                 callback(error, null);
             });
-            
+
             jobAPI.QueryJobHistory(request, response, nextError => {
                 expect(nextError).toEqual(error);
                 done();

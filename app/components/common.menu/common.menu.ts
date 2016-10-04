@@ -15,7 +15,7 @@ import {DataService} from '../../services/index';
 // refactor:  this should be renamed to hal-common-menu
 export class CommonMenu {
     /**
-     * This is the array (key-value pairs) of titles of nav buttons 
+     * This is the array (key-value pairs) of titles of nav buttons
      */
     @Input() public buttons: HalButton<any>[];
 
@@ -23,7 +23,7 @@ export class CommonMenu {
      * The rels that drive what buttons are enabled
      */
     @Input() public availableRels: HalLinks;
-    
+
     /**
      * This is the current active rel.
      */
@@ -40,5 +40,5 @@ export class CommonMenu {
 
     public isButtonDisabled = (rel: string) => {
         return !this.availableRels || !this.availableRels[rel];
-    };    
+    };
 }

@@ -10,7 +10,7 @@ var app: express.Express = express();
  * Static files to be exposed to the client
  * 1. First, we need to expose our dist public and app folders; to do this, we walk up the directory structure from the build output location to find our root.
  * 2. Next, we need to expose node_modules we depend on from the client. Since some packages (angular2) don't expose a main, we can't use require, so instead
- *    we perform the same lookup as node does. 
+ *    we perform the same lookup as node does.
  */
 var moduleDirectory: string = path.resolve(__dirname, '../../../');
 

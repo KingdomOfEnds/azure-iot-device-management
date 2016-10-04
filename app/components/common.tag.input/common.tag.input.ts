@@ -35,9 +35,9 @@ export class TagInput extends GlobalContext implements OnChanges {
             this.addTag();
         }
     }
-    
+
     public addTag() {
-        if (this.value.length > 0 
+        if (this.value.length > 0
             && this.tags.indexOf(this.value) === -1
             && this.tags.length < MAX_ALLOWED_TAGS) {
             this.tags.push(this.value);

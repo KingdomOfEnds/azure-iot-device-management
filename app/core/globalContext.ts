@@ -23,16 +23,16 @@ const gridBreakpoints = PresentationOnBreakpoint([
 // their templates to access string resources in an ergonomic way
 export class GlobalContext {
     public static Alerts: BehaviorSubject<Alert> = new BehaviorSubject<Alert>(null);
-    
+
     public get alert(): Alert {
         return GlobalContext.Alerts.value;
     }
-    
+
     public set alert(newValue: Alert) {
         GlobalContext.Alerts.next(newValue);
     }
-    
+
     public Resources = Resources;
-    
+
     public GridBreakpoints = gridBreakpoints;
 }

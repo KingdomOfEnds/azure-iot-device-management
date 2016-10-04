@@ -67,16 +67,16 @@ export function normalizePort(val: any) {
 /**
  * This is the main function for the application
  */
-export async function main() {    
+export async function main() {
     // initialize configuration:
     const config =  await Config.initialize();
-    
+
     // get the port to listen on:
     const port = normalizePort(config.Port);
-    
+
     // initialize the DM app:
     const app = await App.initialize();
-    
+
     /**
      * Create HTTP server.
      */
@@ -86,12 +86,12 @@ export async function main() {
      * Listen on provided port, on all network interfaces.
      */
     server.listen(port);
-    
+
     /**
      * Event listener for HTTP server "error" event.
      */
     server.on('error', onStartupError(port));
-    
+
     /**
      * Event listener to log out what we're listening on
      */

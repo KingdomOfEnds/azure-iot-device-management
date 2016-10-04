@@ -55,7 +55,7 @@ describe('DevicePropertiesForm Tests', () => {
         FormBuilder
     ]);
     let devicePropForm: DevicePropertiesForm;
-    
+
     beforeEach(inject([FormBuilder], (formBuilder: FormBuilder) => {
         devicePropForm = new DevicePropertiesForm(formBuilder);
 
@@ -63,11 +63,11 @@ describe('DevicePropertiesForm Tests', () => {
 
         devicePropForm.ngOnInit();
     }));
-    
+
     it('should construct', () => {
         expect(devicePropForm).toBeDefined();
     });
-    
+
     it('should initialize form onInit', () => {
         checkFieldValues(devicePropForm, initialSuffix);
     });

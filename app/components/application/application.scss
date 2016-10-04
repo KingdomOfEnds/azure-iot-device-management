@@ -3,7 +3,7 @@
 body {
     padding: 65px 0 $gutter-md 0;
 }
- 
+
 hr {
     margin: $gutter-sm $gutter-md $gutter-sm $gutter-md;
     border-color: $hr-color;
@@ -14,7 +14,7 @@ hr {
     border-left: $hr-width solid $hr-color;
     vertical-align: top;
     display: inline-block;
-    
+
     margin-right: $gutter-sm;
 }
 
@@ -40,7 +40,7 @@ h2 {
 .filter-stack-left-control {
     float: left;
     margin-right: $gutter-sm;
-    margin-bottom: $gutter-sm;     
+    margin-bottom: $gutter-sm;
 }
 
 .ellipsis {
@@ -73,13 +73,13 @@ h2 {
 
 @media only screen and (max-width :$breakpoint-sm) {
     .stack-left-control {
-        margin-bottom: $gutter-sm;        
+        margin-bottom: $gutter-sm;
     }
 }
 
 .btn-bar {
     margin-bottom: -$gutter-sm;
-    
+
     .btn {
         margin-bottom: $gutter-sm;
     }
@@ -99,7 +99,3 @@ h2 {
         float: right;
     }
 }
-
-
-
-

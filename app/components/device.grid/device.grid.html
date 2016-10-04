@@ -185,7 +185,7 @@
                 {{gridSource.registryStats.totalDeviceCount}} {{Resources.DeviceGrid.labelDisplayingDevices}} {{gridSource.visibleRowCount}}
             </div>
             <div class="poll-status">
-                <span>{{Resources.DeviceGrid.labelPoll}}: <input type="checkbox" (change)="gridSource.poll(!gridSource.poll())" [checked]="gridSource.poll()"></span> {{Resources.DeviceGrid.labelLastUpdated}}: {{gridSource.lastUpdated.toLocaleTimeString()}}            
+                <span>{{Resources.DeviceGrid.labelPoll}}: <input type="checkbox" (change)="gridSource.poll(!gridSource.poll())" [checked]="gridSource.poll()"></span> {{Resources.DeviceGrid.labelLastUpdated}}: {{gridSource.lastUpdated.toLocaleTimeString()}}
             </div>
         </div>
         <div class="spacer"></div>
@@ -193,7 +193,7 @@
 
     <div class="row">
         <div class="col-md-12" [ngClass]="{'disabled': editFormVisible}">
-            <grid [source]="gridSource" [configuration]="gridConfiguration" (selectionChanged)="updateSelection($event)" 
+            <grid [source]="gridSource" [configuration]="gridConfiguration" (selectionChanged)="updateSelection($event)"
             [currentPresentation]="GridBreakpoints" (rowDoubleClick)="findDevice($event.deviceId)"></grid>
         </div>
     </div>

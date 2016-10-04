@@ -10,7 +10,7 @@ export class DMExceptionHandler extends ExceptionHandler {
     constructor(public zone: NgZone) {
         super(null, false);
     }
-    
+
     call(error, stackTrace = null, reason = null) {
         console.error(error);
         if (stackTrace) console.error(stackTrace);

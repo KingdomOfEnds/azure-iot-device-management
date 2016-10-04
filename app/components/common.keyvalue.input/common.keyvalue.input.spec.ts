@@ -15,19 +15,19 @@ import {FormBuilder} from '@angular/common';
 import {KeyValueInput} from './common.keyvalue.input';
 
 describe('KeyValueInput Tests', () => {
-    
+
     beforeEachProviders(() => [
         FormBuilder
     ]);
-  
+
     let keyValueInput: KeyValueInput;
-    
+
     beforeEach(inject([FormBuilder], (formBuilder: FormBuilder) => {
         keyValueInput = new KeyValueInput(formBuilder);
 
         keyValueInput.ngOnInit();
     }));
-    
+
     it('should construct', () => {
         expect(keyValueInput).toBeDefined();
     });

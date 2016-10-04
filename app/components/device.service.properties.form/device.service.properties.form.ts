@@ -46,10 +46,10 @@ export class ServicePropertiesForm extends GlobalContext implements OnInit, OnCh
     public ngOnChanges(changes: {[propName: string]: SimpleChange}) {
         // update device form info
         if (changes['device']) {
-            let oldDevice = changes['device'].previousValue; 
+            let oldDevice = changes['device'].previousValue;
 
             if (oldDevice) {
-                // truthy -> truthy = updated device (including before ngOnInit) 
+                // truthy -> truthy = updated device (including before ngOnInit)
                 if (this.device) {
                     // keep our own copy
                     this.device = clone(this.device);
@@ -92,7 +92,7 @@ export class ServicePropertiesForm extends GlobalContext implements OnInit, OnCh
 
         device.serviceProperties.tags = this.tagControl.toTags();
 
-        device.status = this.enabledControl.value ? 'enabled' : 'disabled'; 
+        device.status = this.enabledControl.value ? 'enabled' : 'disabled';
 
         return device;
     }
@@ -112,35 +112,35 @@ export class ServicePropertiesForm extends GlobalContext implements OnInit, OnCh
     public connectionStringControl(): Control {
         return <Control>this.form.controls['connectionString'];
     }
-    
+
     public deviceId(): string {
         return this.device ? this.device.deviceId || '' : '';
     }
 
     public primaryKey(): string {
-        return this.device 
+        return this.device
             && this.device.authentication
             && this.device.authentication.symmetricKey ? this.device.authentication.symmetricKey.primaryKey || '' : '';
     }
 
     public secondaryKey(): string {
-        return this.device 
+        return this.device
             && this.device.authentication
             && this.device.authentication.symmetricKey ? this.device.authentication.symmetricKey.secondaryKey || '' : '';
     }
 
     public tags(): string[] {
-        return this.device 
+        return this.device
             && this.device.serviceProperties ? this.device.serviceProperties.tags || null : null;
     }
 
     public properties(): Object {
-        return this.device 
+        return this.device
             && this.device.serviceProperties ? this.device.serviceProperties.properties || null : null;
     }
 
     public enabled(): boolean {
-        // default new devices to be enabled 
+        // default new devices to be enabled
         return this.device ? this.device.status.toLowerCase() === 'enabled' : true;
     }
 

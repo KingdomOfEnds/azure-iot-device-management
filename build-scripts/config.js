@@ -34,34 +34,34 @@ var config = {
     // install configuration
     cleanFolder: 'dist',
     installPaths: [
-        './package.json', 
-        './app/tsd.json', 
+        './package.json',
+        './app/tsd.json',
         './server/tsd.json'
     ],
     lintPaths: [
-        './app/**/*.ts', 
-        './server/**/*.ts', 
+        './app/**/*.ts',
+        './server/**/*.ts',
         '!./app/**/*.d.ts',
         '!./server/**/*.d.ts'
     ],
-    
+
     // karma config file
-    karmaPath:  '../karma.conf.js', 
-    
+    karmaPath:  '../karma.conf.js',
+
     // client configuration
     clientDir: 'app/**/*',
     clientTsConfig: 'app/tsconfig.json',
     clientDest: 'dist/app',
     themeDir: 'app/theme',
     clientBasePath: 'app',
-    
+
     // server configuration
     serverDir: 'server/**/*',
     serverTsConfig: 'server/tsconfig.json',
     serverDest: 'dist/server',
     serverTestOut: 'dist/test/html-report',
     serverBasePath: 'server',
-    
+
     // common congiguration
     commonDir: 'common/**/*',
     commonTsConfig: 'common/tsconfig.json',
@@ -72,10 +72,10 @@ var config = {
     serverDebuggingPort: 9222,
     liveReloadPort: 9091,
     hostname: '127.0.0.1',
-    
+
     // test configuration
     testDest: 'dist/test',
-    
+
     // copyright notice
     copyrightNotice: `/* Copyright (c) Microsoft Corporation. All Rights Reserved. */
 

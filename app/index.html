@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Loading...</title>
@@ -18,16 +18,16 @@
     <script src="node_modules/underscore/underscore.js"></script>
 
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-    
+
     <script src="systemjs.config.js"></script>
     <script src="node_modules/@azure-iot/common-ux/client.js"></script>
     <script src="node_modules/@azure-iot/logging/client/client.js"></script>
     <script src="client.bundle.js"></script>
-    
+
     <script src="//localhost:9091"></script>
 
     <script>
-        System.import('dist/app/boot.js') 
+        System.import('dist/app/boot.js')
             .then(null, console.error.bind(console));
     </script>
 

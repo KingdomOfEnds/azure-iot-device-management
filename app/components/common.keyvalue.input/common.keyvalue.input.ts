@@ -15,7 +15,7 @@ export class KeyValueInput extends GlobalContext implements OnInit, OnChanges {
     @Input() valuePlaceholder: string;
     @Input() disabled: boolean;
     @Input() keyValueMap: { [key: string]: string};
-    
+
     public form: ControlGroup;
 
     constructor(private formBuilder: FormBuilder) {
@@ -28,7 +28,7 @@ export class KeyValueInput extends GlobalContext implements OnInit, OnChanges {
             'value': new Control()
         });
     }
-    
+
     public ngOnChanges(changes: {[propName: string]: SimpleChange}) {
         if (!this.keyValueMap) {
             this.keyValueMap = {};

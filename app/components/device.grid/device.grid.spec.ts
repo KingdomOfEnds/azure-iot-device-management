@@ -169,7 +169,7 @@ describe('Device Grid Tests', () => {
 
         fakeGridSource = new DeviceGridSource(dataService);
 
-        // These need to be injected for real tests 
+        // These need to be injected for real tests
         router = <any>{};
         router_params = <any>{};
 
@@ -258,7 +258,7 @@ describe('Device Grid Tests', () => {
 
     it('should be able to select configuration', () => {
         grid.selectConfiguration(config2);
-        
+
         // Verifying that name, columns and filters match Config 2.
         expect(grid.selectedConfiguration.value.name).toEqual('Config 2');
         expect(grid.selectedConfiguration.value.columns.length).toEqual(1);
@@ -266,7 +266,7 @@ describe('Device Grid Tests', () => {
         expect(grid.selectedConfiguration.value.filters.length).toEqual(0);
 
         grid.selectConfiguration(config3);
-        
+
         // Verifying that name, columns and filters match Config 3.
         expect(grid.selectedConfiguration.value.name).toEqual('Config 3');
         expect(grid.selectedConfiguration.value.columns.length).toEqual(2);
@@ -282,7 +282,7 @@ describe('Device Grid Tests', () => {
         grid.saveConfiguration();
         expect(grid.availableConfigurations.length).toEqual(3);
     });
-    
+
     it('should be able to save new configuration', () => {
         // Changing name to save configuration as new one.
         grid.selectedConfiguration.value.name = 'New config';
@@ -290,11 +290,11 @@ describe('Device Grid Tests', () => {
 
         expect(grid.availableConfigurations.length).toEqual(4);
     });
-    
+
     it('should not change selectedConfiguration when saveConfiguration', () => {
         spyOn(grid.selectedConfiguration, 'next');
         spyOn(grid, 'applyFilter');
-        
+
         grid.saveConfiguration();
         expect(grid.availableConfigurations.length).toEqual(3);
         expect(grid.selectedConfiguration.next).not.toHaveBeenCalled();
@@ -337,7 +337,7 @@ describe('Device Grid Tests', () => {
         grid.selectedConfiguration.value.columns[0] = column;
 
         var newFilters: FilterValue<IGridFilter>[] = [
-            { 
+            {
                 option: {
                     'name': 'Device ID', 'model': 'default', 'key': 'deviceId', 'in': [], 'isArray': false
                 },
@@ -494,7 +494,7 @@ describe('Device Grid Tests', () => {
 
         expect(grid.currentJob).toEqual(grid.Resources.Common.firmwareUpdate);
         expect(grid.promptJobParams).toHaveBeenCalledWith(grid.Resources.ModalPrompts.firmwareUpdate, fakeFirmwareButton, grid.currentJob);
-        
+
         expect(grid.editorVisible).toEqual(false);
         expect(grid.isConfirming).toEqual(false);
     });
@@ -556,7 +556,7 @@ describe('Device Grid Tests', () => {
         grid.searchDevice = '';
 
         grid.searchKeyPress(<any>fakeEvent);
-        
+
         expect(grid.findDevice).not.toHaveBeenCalled();
         expect(grid.alert).not.toBe(null);
     });
@@ -648,13 +648,13 @@ describe('Device Grid Tests', () => {
             it('should force update the grid and alert danger when delete devices fails', () => {
                 spyOn(grid, 'resetUI');
                 spyOn(dataService, 'deleteDevices').and.callFake(() => fakeSubscribe);
-                
+
                 var response = {
                     json: () => {
                         return { _error: { message: 'Failed' } };
                     }
                 };
-                
+
                 grid.onConfirm();
                 grid.onDeleteDevicesError(response);
                 expect(grid.alert.msg).toEqual('Failed');
