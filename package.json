@@ -14,6 +14,8 @@
     "deploy": "gulp deploy",
     "docker": "node build-scripts/docker.js",
     "test": "gulp test",
+    "precommit": "gulp precommit",
+    "trim": "gulp trim",
     "start": "node dist/server/start.js"
   },
   "main": "dist/server/start.js",
@@ -62,6 +64,7 @@
   },
   "devDependencies": {
     "commander": "^2.9.0",
+    "diff-cleaner": "^2.0.0",
     "glob": "^7.0.0",
     "gulp": "^3.9.1",
     "gulp-add-src": "^0.2.0",
@@ -72,6 +75,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^4.3.1",
     "gulp-typescript": "^2.11.0",
+    "husky": "^0.11.5",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
